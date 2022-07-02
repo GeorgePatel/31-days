@@ -25,7 +25,7 @@ activities and will return personalized feedback generated from their data to he
 8. If we decide later on to collect more data to provide greater personalized results to the user, will our current design make that too painful of a transition?
 9. How will the weekly and monthly Balance ratios and productivity/happiness scales be calculated? From a fixed start date (i.e. Monday) to a fixed end date (i.e. Sunday) or a dynamically updating ratio of the past 7 days and the past 31 days?
 10. Will calculating the Balance ratio for each day provide enough value to the User compared to the extra computing process it will require?
-
+11. Should the Balance be set by the User during or after account creation? What are the technical challenges and pro/cons to both approaches?
 ## 3. Use Cases
 
 U1. As a 31-days customer, I want to create a password-encrypted User account associated with my work-life Balance ratio.
@@ -48,12 +48,9 @@ U9. As a 31-days customer, I want to view my average daily, weekly, and monthly 
 
 U10. As a 31-days customer, I want to view my average daily, weekly, and monthly happiness scale for my leisure Activities.
 
-## 4. Project Scope
+U11. As a 31-days customer, I want to view my target Balance.
 
-*Clarify which parts of the problem you intend to solve. It helps reviewers know
-what questions to ask to make sure you are solving for what you say and stops
-discussions from getting sidetracked by aspects you do not intend to handle in
-your design.*
+## 4. Project Scope
 
 ### 4.1. In Scope
 
@@ -61,10 +58,11 @@ your design.*
 * Creating, updating, and deleting an Activity
 * Creating and updating a Balance
 * Retrieving Activities
-* Sort Activities by the day, week, and month
-* Retrieve productivity scale by the day, week, and month
-* Retrieve happiness scale by the day, week, and month
-* Retrieve Balance by the week and month
+* Retrieving target Balance
+* Sorting Activities by the day, week, and month
+* Retrieving productivity scale by the day, week, and month
+* Retrieving happiness scale by the day, week, and month
+* Sorting Balance by the week and month
 
 ### 4.2. Out of Scope
 
@@ -88,13 +86,48 @@ reasonable. That is, why it represents a good data flow and a good separation of
 concerns. Where applicable, argue why this architecture satisfies the stated
 requirements.*
 
+This initial iteration will provide the minimum lovable product (MLP) including creating, updating, deleting and 
+retrieving an Activity, as well as updating and retrieving current and target Balance.
+
+We will use API Gateway and Lambda to create seven endpoints (GetActivity, CreateActivity, UpdateActivity, 
+DeleteActivity, CreateBalance, UpdateBalance and GetBalance) that will handle the creation, update, and retrieval of 
+Activities and Balance to satisfy our requirements.
+
+We will store current Balances available for Users in a table in DynamoDB. Activities themselves will also be 
+stored in DynamoDB. For simpler computations of current Balances, we will continually update the list of Activities 
+in a given time period (i.e. 7 days) directly in the Balances table.
+
+31-days will also provide a web interface for Users to manage their Activities. 
+A main page providing a list view of all of their Activities for either the day, week or month will let them create new 
+Activities, view current productivity/happiness scales, update or delete their Activities. They can link off to another 
+page to view their current Balance ratios.
+
 # 6. API
 
 ## 6.1. Public Models
 
-*Define the data models your service will expose in its responses via your
-*`-Model`* package. These will be equivalent to the *`PlaylistModel`* and
-*`SongModel`* from the Unit 3 project.*
+```
+// ActivityModel
+
+String userId; // unique identifier for User // partition key
+String activityId; // unique identifier for the Activity // sort key
+String activity; // what did you do
+ZonedDateTime startTime; // from this exact time
+ZonedDateTime endTime; // to that exact time
+String type; // either for work or leisure (ENUM)
+int scale; // from a satisfaction scale of 1 - 10
+```
+
+```
+// BalanceModel
+
+String userId; // unique identifier for User // partition key
+String period; // either weekly or monthly (ENUM) // sort key
+List<Activity> activities; // all the Activities from the period
+float balance; // percentage of work activities over leisure activities
+float productivity; // calculated from the average of the satifaction scales from work activities
+float happiness; // calculated from the average of the satisfaction scales from leisure activities 
+```
 
 ## 6.2. *First Endpoint*
 
