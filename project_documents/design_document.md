@@ -1,46 +1,52 @@
-# [team name] Design Document
-
-## Instructions
-
-*Save a copy of this template for your team in the same folder that contains
-this template.*
-
-*Replace italicized text (including this text!) with details of the design you
-are proposing for your team project. (Your replacement text shouldn't be in
-italics)*
-
-*You should take a look at the example design document in the same folder as
-this template for more guidance on the types of information to capture, and the
-level of detail to aim for.*
-
-## *Project Title* Design
+# 31-days Design Document
 
 ## 1. Problem Statement
 
-*Explain clearly what problem you are trying to solve.*
+In the ever-changing world of technology, we need to constantly push ourselves to the limit to keep up with
+the latest. Every professional needs to have a balance between work life and personal life. Sometimes, however,
+that balance scale ends up tipping over too much on one side. The modern working professional requires
+a service that can help them regain harmony in their life.
+
+This design document describes 31-days, a new service that will provide productivity tools to meet our hardworking
+professionals' time tracking needs. It is designed to interact with the professionals to record their day-to-day
+activities and will return personalized feedback generated from their data to help guide their personal development.
+
 
 
 ## 2. Top Questions to Resolve in Review
 
-*List the most important questions you have about your design, or things that
-you are still debating internally that you might like help working through.*
+1. Should we have separate tables to store the Activities based on the day, week and month? Or could we utilize GSIs to be able to retrieve those Activities by the day, week or month? 
+2. Should there be a GET endpoint for all Activities for the user? Is that going to slow the service response time if there are a large number of Activities to load? Could we utilize Pagination?
+3. What is the unique identifier for an Activity? Do we require a composite key? If the primary key is the UserId, do we need to utilize an ActivityId as the sort key to locate a specific Activity?
+4. Should we have separate tables to store the Balance data based on the day, week and month? Or could we utilize GSIs to be able to retrieve those Balances by the day, week or month?
+5. How is the Balance set by the user going to interact with the data in Activities? If the primary key for a Balance is the UserId, do we need to utilize a BalanceId as the sort key to locate a specific Balance?
+6. What should be the extent of the data we request from the user? Does it matter what the specific activity entailed other than the fact that it was either for work or leisure?
+7. How is the frontend going to interact with the backend to visually display the Activities and the ratios of work/life Balance?
+8. If we decide later on to collect more data to provide greater personalized results to the user, will our current design make that too painful of a transition?
+9. How are the weekly and monthly Balance ratios going to be calculated? From a fixed start date (i.e. Monday) to a fixed end date (i.e. Sunday) or a dynamically updating ratio of the past 7 days and the past 31 days?
 
-1.   
-2.   
-3.  
 
 ## 3. Use Cases
 
-*This is where we work backwards from the customer and define what our customers
-would like to do (and why). You may also include use cases for yourselves, or
-for the organization providing the product to customers.*
+U1. As a 31-days customer, I want to create an Activity that contains information about what I did from this exact time to that exact time, whether it was for work or leisure, and how satisfied (on a scale) I was with the activity.
 
-U1. *As a [product] customer, I want to `<result>` when I `<action>`*
+U2. As a 31-days customer, I want to create my work-life Balance ratio.
 
-U2. *As a [product] customer, I want to view my grocery list when I log into the
-grocery list page*
-    
-U3. ...
+U3. As a 31-days customer, I want to update my Activities.
+
+U4. As a 31-days customer, I want to update my work-life Balance ratio.
+
+U5. As a 31-days customer, I want to delete my Activities.
+
+U6. As a 31-days customer, I want to view all my Activities in a visually appealing layout when I log into the main page of the website.
+
+U7. As a 31-days customer, I want to view my Activity list and the Balance ratio for the current week when I click to view my weekly results.
+
+U8. As a 31-days customer, I want to view my Activity list and the Balance ratio for the current month when I click to view my monthly results.
+
+U9. As a 31-days customer, I want to view my average daily, weekly, and monthly productivity scale for my work Activities.
+
+U10. As a 31-days customer, I want to view my average daily, weekly, and monthly happiness scale for my leisure Activities.
 
 ## 4. Project Scope
 
