@@ -23,14 +23,14 @@ activities and will return personalized feedback generated from their data to he
 6. What should be the extent of the data we request from the user? Does it matter what the specific activity entailed other than the fact that it was either for work or leisure?
 7. How is the frontend going to interact with the backend to visually display the Activities and the ratios of work/life Balance?
 8. If we decide later on to collect more data to provide greater personalized results to the user, will our current design make that too painful of a transition?
-9. How are the weekly and monthly Balance ratios going to be calculated? From a fixed start date (i.e. Monday) to a fixed end date (i.e. Sunday) or a dynamically updating ratio of the past 7 days and the past 31 days?
-
+9. How will the weekly and monthly Balance ratios and productivity/happiness scales be calculated? From a fixed start date (i.e. Monday) to a fixed end date (i.e. Sunday) or a dynamically updating ratio of the past 7 days and the past 31 days?
+10. Will calculating the Balance ratio for each day provide enough value to the User compared to the extra computing process it will require?
 
 ## 3. Use Cases
 
-U1. As a 31-days customer, I want to create an Activity that contains information about what I did from this exact time to that exact time, whether it was for work or leisure, and how satisfied (on a scale) I was with the activity.
+U1. As a 31-days customer, I want to create a password-encrypted User account associated with my work-life Balance ratio.
 
-U2. As a 31-days customer, I want to create my work-life Balance ratio.
+U2. As a 31-days customer, I want to create an Activity that contains information about what I did from this exact time to that exact time, whether it was for work or leisure, and how satisfied (on a scale) I was with the activity.
 
 U3. As a 31-days customer, I want to update my Activities.
 
@@ -38,7 +38,7 @@ U4. As a 31-days customer, I want to update my work-life Balance ratio.
 
 U5. As a 31-days customer, I want to delete my Activities.
 
-U6. As a 31-days customer, I want to view all my Activities in a visually appealing layout when I log into the main page of the website.
+U6. As a 31-days customer, I want to view my Activity list for the current day in a visually appealing layout when I log into the main page of the website.
 
 U7. As a 31-days customer, I want to view my Activity list and the Balance ratio for the current week when I click to view my weekly results.
 
@@ -57,16 +57,23 @@ your design.*
 
 ### 4.1. In Scope
 
-*Which parts of the problem defined in Sections 1 and 2 will you solve with this
-design?*
+* Creating a User account with password-encryption
+* Creating, updating, and deleting an Activity
+* Creating and updating a Balance
+* Retrieving Activities
+* Sort Activities by the day, week, and month
+* Retrieve productivity scale by the day, week, and month
+* Retrieve happiness scale by the day, week, and month
+* Retrieve Balance by the week and month
 
 ### 4.2. Out of Scope
 
-*Based on your problem description in Sections 1 and 2, are there any aspects
-you are not planning to solve? Do potential expansions or related problems occur
-to you that you want to explicitly say you are not worrying about now? Feel free
-to put anything here that you think your team can't accomplish in the unit, but
-would love to do with more time.*
+* Compare productive and happiness scale from one period (i.e. week, month) to another
+* Deleting User account and all the associated Activities
+* Retrieve all Activities
+* Retrieve Balance by the day
+* Sharing Balance (i.e. dashboard) between Users
+* Integration with social media platforms such as LinkedIn, Facebook etc.
 
 # 5. Proposed Architecture Overview
 
