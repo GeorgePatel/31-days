@@ -93,14 +93,14 @@ We will use API Gateway and Lambda to create seven endpoints (GetActivity, Creat
 DeleteActivity, CreateBalance, UpdateBalance and GetBalance) that will handle the creation, update, and retrieval of 
 Activities and Balance to satisfy our requirements.
 
-We will store current Balances available for Users in a table in DynamoDB. Activities themselves will also be 
-stored in DynamoDB. For simpler computations of current Balances, we will continually update the list of Activities 
-in a given time period (i.e. 7 days) directly in the Balances table.
+We will store the current Balances available for Users in a table in DynamoDB. Activities themselves will also be 
+stored in DynamoDB. For simpler computations of the current Balances, we will continually update the list of Activities 
+in a given time period (i.e. 7 days) directly in the Balances' table during the creation of the Activities.
 
 31-days will also provide a web interface for Users to manage their Activities. 
 A main page providing a list view of all of their Activities for either the day, week or month will let them create new 
-Activities, view current productivity/happiness scales, update or delete their Activities. They can link off to another 
-page to view their current Balance ratios.
+Activities, update or delete their Activities. They can link off to another page to view their current Balance ratios
+and view current productivity/happiness scales.
 
 # 6. API
 
